@@ -18,7 +18,8 @@ namespace EletJatek
         private Jatek jatek;
         public Label[,] palya;
         public Button lepes;
-        public Button timer;
+        public Button timer_start;
+        public Button timer_stop;
         private Timer timer1;
         public Form1()
         {
@@ -31,6 +32,8 @@ namespace EletJatek
             Meret.Enabled = false;
             OKGomb.Enabled = false;
             lepes.Enabled = false;
+            timer_start.Enabled = false;
+            timer_stop.Enabled = true;
             InitTimer();
         }
 
@@ -39,6 +42,8 @@ namespace EletJatek
             Meret.Enabled = true;
             OKGomb.Enabled = true;
             lepes.Enabled = true;
+            timer_start.Enabled = true;
+            timer_stop.Enabled = false;
             timer1.Stop();
         }
 
@@ -88,26 +93,27 @@ namespace EletJatek
 
         private void timergomb1()
         {
-            timer = new Button();
-            timer.Text = "Start";
-            timer.Parent = controlPanel;
-            timer.Click += Start_timer;
-            timer.BackColor = Color.LightGray;
-            timer.Left = 150;
-            timer.Top = 20;
-            controlPanel.Controls.Add(timer);
+            timer_start = new Button();
+            timer_start.Text = "Start";
+            timer_start.Parent = controlPanel;
+            timer_start.Click += Start_timer;
+            timer_start.BackColor = Color.LightGray;
+            timer_start.Left = 150;
+            timer_start.Top = 20;
+            controlPanel.Controls.Add(timer_start);
         }
 
         private void timergomb2()
         {
-            timer = new Button();
-            timer.Text = "Stop";
-            timer.Parent = controlPanel;
-            timer.Click += Stop_timer;
-            timer.BackColor = Color.LightGray;
-            timer.Left = 250;
-            timer.Top = 20;
-            controlPanel.Controls.Add(timer);
+            timer_stop = new Button();
+            timer_stop.Text = "Stop";
+            timer_stop.Parent = controlPanel;
+            timer_stop.Click += Stop_timer;
+            timer_stop.BackColor = Color.LightGray;
+            timer_stop.Left = 250;
+            timer_stop.Top = 20;
+            timer_stop.Enabled = false;
+            controlPanel.Controls.Add(timer_stop);
         }
 
         private void lepesGomb_Click(object sender, EventArgs e)
