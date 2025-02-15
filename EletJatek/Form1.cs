@@ -34,7 +34,7 @@ namespace EletJatek
             lepes.Enabled = false;
             timer_start.Enabled = false;
             timer_stop.Enabled = true;
-            InitTimer();
+            timer1.Start();
         }
 
         public void Stop_timer(object sender, EventArgs e)
@@ -51,8 +51,7 @@ namespace EletJatek
         {
             timer1 = new Timer();
             timer1.Tick += new EventHandler(timer1_Tick);
-            timer1.Interval = 500;
-            timer1.Start();
+            timer1.Interval = 300;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -116,6 +115,14 @@ namespace EletJatek
             controlPanel.Controls.Add(timer_stop);
         }
 
+        private void changeColor(object sender, EventArgs e)
+        {
+            Label label = sender as Label;
+            int[] asd = { (label.Tag as Info).Sor, (label.Tag as Info).Oszlop };
+            jatek.Vmi1 = asd;
+            tablaUpdate();
+        }
+
         private void lepesGomb_Click(object sender, EventArgs e)
         {
             jatek.Vmi = true;
@@ -124,7 +131,10 @@ namespace EletJatek
 
         private void tablaMegj()
         {
-            int w = 500 / jatek.SorDb, h = 500 / jatek.SorDb;
+            controlPanel.Controls.Remove(timer_start);
+            controlPanel.Controls.Remove(timer_stop);
+            controlPanel.Controls.Remove(lepes);
+            int w = 500 / jatek.SorDb+2, h = 500 / jatek.SorDb+2;
             for (int i = 1; i < jatek.SorDb+1; i++)
             {
                 for (int j = 1; j < jatek.OszlopDb+1; j++)
@@ -140,6 +150,7 @@ namespace EletJatek
                         Cursor = Cursors.Hand,
                         Width = w,
                         Height = h,
+                        Tag = new Info(i, j),
                         Left = 100 + (j - 1) * w - (j - 1),
                         Top = 150 + (i - 2) * h - (i - 1),
                         Parent = panelGame,
@@ -151,11 +162,13 @@ namespace EletJatek
                     }
                     else if (jatek.tabla[i, j].Jel == Mezo.Jelek.Foglalt)
                     {
-                        lb.BackColor= Color.LightYellow;
+                        lb.BackColor= Color.Yellow;
                     }
+                    lb.Click += changeColor;
                     palya[i, j] = lb;
                 }
             }
+            InitTimer();
             Gombok();
         }
         private void tablaUpdate()
@@ -170,7 +183,7 @@ namespace EletJatek
                     }
                     else if (jatek.tabla[i, j].Jel == Mezo.Jelek.Foglalt)
                     {
-                        palya[i, j].BackColor = Color.LightYellow;
+                        palya[i, j].BackColor = Color.Yellow;
                     }
                 }
             }

@@ -48,6 +48,7 @@ namespace EletJatek
         private int sorDb, oszlopDb;
         public Mezo[,] tabla;
         public bool vmi;
+        public int[] vmi1;
 
         public int SorDb
         {
@@ -79,10 +80,33 @@ namespace EletJatek
             }
         }
 
+        public int[] Vmi1
+        {
+            get { return vmi1; }
+            set
+            {
+                vmi1 = value;
+                ColorChange(vmi1[0], vmi1[1]);
+            }
+        }
+
         public Jatek(int sorDb, int oszlopDb)
         {
             SorDb = sorDb;
             OszlopDb = oszlopDb;
+        }
+
+        private void ColorChange(int x, int y)
+        {
+            if (tabla[x, y].Jel == Mezo.Jelek.Ures)
+            {
+                tabla[x, y].Jel = Mezo.Jelek.Foglalt;
+            }
+            else
+            {
+                tabla[x, y].Jel = Mezo.Jelek.Ures;
+            }
+            
         }
 
         private void tablaLetrehozasa()
@@ -100,6 +124,7 @@ namespace EletJatek
 
         private void tablaFeltoltes(Mezo[,] tabla)
         {
+            /*
             for (int i = 1; i < tabla.GetLength(0)-1; i++)
             {
                 for (int j = 1; j < tabla.GetLength(1)-1; j++)
@@ -115,6 +140,7 @@ namespace EletJatek
                     }
                 }
             }
+            */
         }
 
         private void leptet(Mezo[,] tabla)
